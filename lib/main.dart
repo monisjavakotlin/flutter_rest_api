@@ -29,6 +29,56 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    getData();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Post Content'),
+      ),
+      body: ListView.builder(
+        itemCount: data == null ? 0 : data.length,
+        itemBuilder: (BuildContext context, int index) {
+          return Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Card(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    'userId : ${data[index]['userId']}',
+                    style:
+                        TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    'id : ${data[index]['id']}',
+                    style:
+                        TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    'title : ${data[index]['title']}',
+                    style:
+                        TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    'body : ${data[index]['body']}',
+                    style:
+                        TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  /*@override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -46,5 +96,5 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
     );
-  }
+  }*/
 }
