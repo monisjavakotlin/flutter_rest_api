@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -44,32 +45,32 @@ class _HomePageState extends State<HomePage> {
         itemCount: data == null ? 0 : data.length,
         itemBuilder: (BuildContext context, int index) {
           return Padding(
-            padding: const EdgeInsets.all(12.0),
+            padding: EdgeInsets.all(10.0),
             child: Card(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    'userId : ${data[index]['userId']}',
-                    style:
-                        TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    'id : ${data[index]['id']}',
-                    style:
-                        TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    'title : ${data[index]['title']}',
-                    style:
-                        TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    'body : ${data[index]['body']}',
-                    style:
-                        TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold),
-                  ),
-                ],
+              elevation: 5.0,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      '${'USERID : ${data[index]['userId']}'}',
+                      style: TextStyle(fontSize: 14.0),
+                    ),
+                    Text(
+                      '${'ID : ${data[index]['id']}'}',
+                      style: TextStyle(fontSize: 14.0),
+                    ),
+                    Text(
+                      '${'TITLE : ${data[index]['title']}'}',
+                      style: TextStyle(fontSize: 14.0),
+                    ),
+                    Text(
+                      '${'BODY : ${data[index]['body']}'}',
+                      style: TextStyle(fontSize: 14.0),
+                    ),
+                  ],
+                ),
               ),
             ),
           );
