@@ -1,76 +1,70 @@
+import 'dart:async';
 import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-void main() => runApp(MaterialApp(
-      home: HomePage(),
-    ));
+void main() {
+  runApp(new MaterialApp(home: new HomePage()));
+}
 
 class HomePage extends StatefulWidget {
   @override
-  _HomePageState createState() => _HomePageState();
+  HomePageState createState() => new HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class HomePageState extends State<HomePage> {
   List data;
 
   Future<String> getData() async {
-    http.Response respone = await http.get(
-      Uri.encodeFull('https://jsonplaceholder.typicode.com/posts'),
-      headers: {'Accept': 'application/json'},
-    );
-    print(respone.body);
+    var response = await http.get(
+        Uri.encodeFull("https://jsonplaceholder.typicode.com/posts"),
+        headers: {"Accept": "application/json"});
 
-    data = jsonDecode(respone.body);
-    for (int i = 0; i < data.length; i++) {
-      print("$i : ${data[i]['title']}");
-    }
+    setState(() {
+      data = jsonDecode(response.body);
+    });
+
+    print(data[1]["title"]);
+
+    return "Success!";
   }
 
   @override
   void initState() {
-    super.initState();
     getData();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Post Content'),
-      ),
+      appBar: AppBar(title: Text("Post Lists"), backgroundColor: Colors.blue),
       body: ListView.builder(
         itemCount: data == null ? 0 : data.length,
         itemBuilder: (BuildContext context, int index) {
           return Padding(
-            padding: EdgeInsets.all(10.0),
+            padding: EdgeInsets.all(8.0),
             child: Card(
-              elevation: 5.0,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      '${'USERID : ${data[index]['userId']}'}',
-                      style: TextStyle(fontSize: 14.0),
-                    ),
-                    Text(
-                      '${'ID : ${data[index]['id']}'}',
-                      style: TextStyle(fontSize: 14.0),
-                    ),
-                    Text(
-                      '${'TITLE : ${data[index]['title']}'}',
-                      style: TextStyle(fontSize: 14.0),
-                    ),
-                    Text(
-                      '${'BODY : ${data[index]['body']}'}',
-                      style: TextStyle(fontSize: 14.0),
-                    ),
-                  ],
-                ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    'USERID : ${data[index]["userId"]}',
+                    style: TextStyle(fontSize: 16.0),
+                  ),
+                  Text(
+                    'ID : ${data[index]["id"]}',
+                    style: TextStyle(fontSize: 16.0),
+                  ),
+                  Text(
+                    'TITLE : ${data[index]["title"]}',
+                    style: TextStyle(fontSize: 16.0),
+                  ),
+                  Text(
+                    'BODY : ${data[index]["body"]}',
+                    style: TextStyle(fontSize: 16.0),
+                  ),
+                ],
               ),
             ),
           );
@@ -78,24 +72,4 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-
-  /*@override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('REST API'),
-      ),
-      body: Center(
-        child: FlatButton(
-          padding: EdgeInsets.all(8.0),
-          color: Colors.cyan,
-          onPressed: getData,
-          child: Text(
-            'Get data',
-            style: TextStyle(fontSize: 20.0, color: Colors.white),
-          ),
-        ),
-      ),
-    );
-  }*/
 }
